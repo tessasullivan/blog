@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import Articles from "./Articles/Articles";
@@ -18,12 +18,26 @@ class UserArticles extends Component {
     this.setState({ articles });
     this.props.setArticles(articles.data);
   }
-  
+
   handlePagination = async url => {
     const articles = await this.props.getUserArticles(this.props.token, url);
-    
+
     this.setState({ articles });
     this.props.setArticles(articles.data);
+  };
+
+  deleteArticle = async id => {
+    console.log(`delete article id ${id} token ${this.props.token}`)
+    await this.props.deleteArticle(id, this.props.token);
+    // remove article from list
+    const articles = this.state.articles.data.filter(
+      article => article.id !== id
+    );
+    this.setState({
+      articles: {
+        data: articles
+      }
+    });
   };
 
   render() {
@@ -33,6 +47,7 @@ class UserArticles extends Component {
         nextUrl={this.state.articles.next_page_url}
         prevUrl={this.state.articles.prev_page_url}
         handlePagination={this.handlePagination}
+        deleteArticle={this.deleteArticle}
       />
     );
   }
@@ -40,7 +55,8 @@ class UserArticles extends Component {
 
 UserArticles.propTypes = {
   getArticles: PropTypes.func.isRequired,
-  setArticles: PropTypes.func.isRequired
+  setArticles: PropTypes.func.isRequired,
+  deleteArticle: PropTypes.func.isRequired
 };
 
 export default UserArticles;

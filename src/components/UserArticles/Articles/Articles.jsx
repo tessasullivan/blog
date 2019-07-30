@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Banner from "../../Banner/Banner";
 import Article from "../../Article/Article";
 
-const Articles = ({ articles, handlePagination, nextUrl, prevUrl }) => (
+const Articles = ({ articles, handlePagination, nextUrl, prevUrl, deleteArticle }) => (
   <div>
     <Banner
       backgroundImage={`url(${process.env.PUBLIC_URL}/assets/img/bg-gift.jpg)`}
@@ -19,6 +19,9 @@ const Articles = ({ articles, handlePagination, nextUrl, prevUrl }) => (
             articles.map(article => (
               <div key={article.id}>
                 <Article article={article} />
+                <div className="text-center">
+                  <button onClick={() => deleteArticle(article.id)} className="btn btn-danger">Delete</button>
+                </div>
                 <hr />
               </div>
             ))}
