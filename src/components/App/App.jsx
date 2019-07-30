@@ -9,6 +9,7 @@ import Footer from "../Footer/Footer";
 import Welcome from "../Welcome/Welcome";
 import CreateArticle from "../CreateArticle/CreateArticle";
 import SingleArticle from "../SingleArticle/SingleArticleContainer";
+import Auth from "../Auth/Auth";
 
 class App extends Component {
   constructor() {
@@ -16,7 +17,7 @@ class App extends Component {
 
     this.state = {
       authUser: null,
-      articles: [],
+      articles: []
     };
   }
 
@@ -31,8 +32,8 @@ class App extends Component {
   }
 
   setArticles = articles => {
-    this.setState({articles});
-  }
+    this.setState({ articles });
+  };
 
   setAuthUser = authUser => {
     this.setState(
@@ -94,18 +95,15 @@ class App extends Component {
             />
           )}
         />
-        <Route
+        <Auth
           path="/articles/create"
-          render={props => (
-            <CreateArticle
-              {...props}
-              getArticleCategories={
-                this.props.articlesService.getArticleCategories
-              }
-              createArticle={this.props.articlesService.createArticle}
-              token={this.state.authUser.token}
-            />
-          )}
+          component={CreateArticle}
+          props={{
+            getArticleCategories: this.props.articlesService.getArticleCategories,
+            createArticle: this.props.articlesService.createArticle,
+            token: this.state.authUser ? this.state.authUser.token : null
+          }}
+          isAuthenticated={this.state.authUser !== null}
         />
         {location.pathname !== "/login" && location.pathname !== "/signup" && (
           <Footer />
