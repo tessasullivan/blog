@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Banner from '../../Banner';
+import Banner from '../../Banner/Banner';
 
 const CreateArticle = ({
   handleInputChange, categories, handleSubmit, errors,

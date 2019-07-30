@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Article from './Article';
+import Article from './Article/Article';
 
 class SingleArticleContainer extends React.Component {
   constructor() {

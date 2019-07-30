@@ -1,16 +1,16 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 
-import Login from '../Login';
-import Navbar from '../Navbar';
-import Signup from '../Signup';
-import Footer from '../Footer';
-import Welcome from '../Welcome';
-import CreateArticle from '../CreateArticle';
-import SingleArticle from '../SingleArticle';
+import Login from '../Login/Login';
+import Navbar from '../Navbar/Navbar';
+import Signup from '../Signup/Signup';
+import Footer from '../Footer/Footer';
+import Welcome from '../Welcome/Welcome';
+import CreateArticle from '../CreateArticle/CreateArticle';
+import SingleArticle from '../SingleArticle/SingleArticle';
 
-class App extends React.Component {
+class App extends Component {
   constructor() {
     super();
 

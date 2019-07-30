@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import SignUpForm from './SignUpForm';
+import LoginForm from './LoginForm/LoginForm';
 
-class Signup extends React.Component {
+class Login extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      name: '',
       email: '',
       password: '',
-      password_confirmation: '',
       errors: {},
     };
   }
@@ -24,8 +22,9 @@ class Signup extends React.Component {
 
   handleSubmit = async (event) => {
     event.preventDefault();
+
     try {
-      const user = await this.props.registerUser(this.state);
+      const user = await this.props.loginUser(this.state);
       this.props.setAuthUser(user);
     } catch (errors) {
       this.setState({ errors });
@@ -33,19 +32,17 @@ class Signup extends React.Component {
   }
 
   render() {
-    return (
-      <SignUpForm
-        handleInputChange={this.handleInputChange}
-        handleSubmit={this.handleSubmit}
-        errors={this.state.errors}
-      />
-    );
+    return (<LoginForm
+      handleInputChange={this.handleInputChange}
+      handleSubmit={this.handleSubmit}
+      errors={this.state.errors}
+    />);
   }
 }
 
-Signup.propTypes = {
-  registerUser: PropTypes.func.isRequired,
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
   setAuthUser: PropTypes.func.isRequired,
 };
 
-export default Signup;
+export default Login;

@@ -40,6 +40,7 @@ const Login = ({ handleInputChange, handleSubmit, errors }) => ((
             <span className="custom-control-indicator" />
             <span className="custom-control-description">Remember me</span>
           </label>
+          {/* eslint-disable-next-line */}
           <a className="text-muted hover-primary fs-13" href="#">Forgot password?</a>
         </div>
         <div className="form-group">

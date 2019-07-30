@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import CreateArticleForm from './CreateArticleForm';
+import CreateArticleForm from './CreateArticleForm/CreateArticleForm';
 
 class CreateArticle extends React.Component {
   constructor() {

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Articles from './Articles';
+import Articles from './Articles/Articles';
 
 class Welcome extends React.Component {
   constructor() {

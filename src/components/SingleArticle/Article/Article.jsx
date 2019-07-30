@@ -1,10 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 const SingleArticle = ({ article }) => (
   <div>
     {/* Header */}
-    <header className="header header-inverse h-fullscreen pb-80" style={{ backgroundImage: `url(${article.imageUrl})` }} data-overlay={8}>
+    <header
+      className="header header-inverse h-fullscreen pb-80"
+      style={{ backgroundImage: `url(${article.imageUrl})` }}
+      data-overlay={8}
+    >
       <div className="container text-center">
         <div className="row h-full">
           <div className="col-12 col-lg-8 offset-lg-2 align-self-center">
@@ -16,16 +20,24 @@ const SingleArticle = ({ article }) => (
             <br />
             <p>
               <span className="opacity-70 mr-8">By</span>
-              <a className="text-white" href="#">{article.user.name}</a>
+              {/* eslint-disable-next-line */}
+              <a className="text-white" href="#">
+                {article.user.name}
+              </a>
             </p>
             <p>
-              <img className="rounded-circle w-40" src={`${process.env.PUBLIC_URL}/assets/img/avatar/2.jpg`} alt="..." />
+              <img
+                className="rounded-circle w-40"
+                src={`${process.env.PUBLIC_URL}/assets/img/avatar/2.jpg`}
+                alt="..."
+              />
             </p>
           </div>
           <div className="col-12 align-self-end text-center">
+          {/* eslint-disable-next-line */}
             <a
-              className="scroll-down-1 scroll-down-inverse"
               href="#"
+              className="scroll-down-1 scroll-down-inverse"
               data-scrollto="section-content"
             >
               <span />
@@ -40,18 +52,14 @@ const SingleArticle = ({ article }) => (
       <div className="section" id="section-content">
         <div className="container">
           <div className="row">
-            <div className="col-12 col-lg-8 offset-lg-2">
-              {article.content}
-            </div>
+            <div className="col-12 col-lg-8 offset-lg-2">{article.content}</div>
           </div>
         </div>
       </div>
       <div className="section bt-1 bg-grey">
         <div className="container">
           <div className="row text-center">
-            <div className="text-center p-5">
-              COMMENTS HERE.
-            </div>
+            <div className="text-center p-5">COMMENTS HERE.</div>
           </div>
         </div>
       </div>
@@ -65,10 +73,10 @@ SingleArticle.propTypes = {
     title: PropTypes.string.isRequired,
     imageUrl: PropTypes.string.isRequired,
     category: PropTypes.shape({
-      name: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired
     }).isRequired,
-    created_at: PropTypes.string.isRequired,
-  }).isRequired,
+    created_at: PropTypes.string.isRequired
+  }).isRequired
 };
 
 export default SingleArticle;

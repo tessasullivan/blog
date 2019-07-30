@@ -28,6 +28,7 @@ const Navbar = ({ authUser }) => ((
             <Link className="nav-link" to="/articles/create">Write new article</Link>
           </li>
           <li className="nav-item">
+            {/* eslint-disable-next-line */}
             <a className="nav-link" href="#">Hey {authUser && authUser.user.name}!
               <i className="fa fa-caret-down" />
             </a>

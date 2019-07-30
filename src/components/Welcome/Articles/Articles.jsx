@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Banner from '../../Banner';
-import Article from '../../Article';
+import Banner from '../../Banner/Banner';
+import Article from '../../Article/Article';
 
 const Articles = ({
   articles, handlePagination, nextUrl, prevUrl,
@@ -24,9 +24,11 @@ const Articles = ({
               <hr />
             </div>))}
           <nav className="flexbox mt-50 mb-50">
-            <a className={`btn btn-white ${prevUrl ? '' : 'disabled'}`} href="#" onClick={() => handlePagination(prevUrl)}>
+          {/* eslint-disable-next-line */}
+            href="#"<a className={`btn btn-white ${prevUrl ? '' : 'disabled'}`} href="#" onClick={() => handlePagination(prevUrl)}>
               <i className="ti-arrow-left fs-9 ml-4" /> Previous Page
             </a>
+            {/* eslint-disable-next-line */}
             <a className={`btn btn-white ${nextUrl ? '' : 'disabled'}`} href="#" onClick={() => handlePagination(nextUrl)}>
               Next Page <i className="ti-arrow-right fs-9 mr-4" />
             </a>

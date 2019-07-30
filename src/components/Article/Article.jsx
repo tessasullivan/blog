@@ -9,6 +9,7 @@ const Article = ({ article }) => ((
         <Link to={`article/${article.slug}`}>{article.title}</Link>
       </h3>
       <div className="link-color-default fs-12">
+        {/* eslint-disable-next-line */}
         <a href="#">{article.category.name}</a>,
         <time>{(new Date(article.created_at)).toDateString()}</time>
       </div>
