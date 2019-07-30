@@ -10,6 +10,7 @@ import Welcome from "../Welcome/Welcome";
 import CreateArticle from "../CreateArticle/CreateArticle";
 import SingleArticle from "../SingleArticle/SingleArticleContainer";
 import Auth from "../Auth/Auth";
+import RedirectIfAuth from "../RedirectIfAuth/RedirectIfAuth";
 
 class App extends Component {
   constructor() {
@@ -65,25 +66,24 @@ class App extends Component {
             />
           )}
         />
-        <Route
+        {/* If user is logged in, redirect to home page if they enter login or signup in URL */}
+        <RedirectIfAuth
           path="/login"
-          render={props => (
-            <Login
-              {...props}
-              setAuthUser={this.setAuthUser}
-              loginUser={this.props.authService.loginUser}
-            />
-          )}
+          component={Login}
+          props={{
+            setAuthUser: this.setAuthUser,
+            loginUser: this.props.authService.loginUser,
+          }}
+          isAuthenticated={this.state.authUser !== null}
         />
-        <Route
+        <RedirectIfAuth
           path="/signup"
-          render={props => (
-            <Signup
-              {...props}
-              registerUser={this.props.authService.registerUser}
-              setAuthUser={this.setAuthUser}
-            />
-          )}
+          component={Signup}
+          props={{
+            setAuthUser: this.setAuthUser,
+            loginUser: this.props.authService.loginUser,
+          }}
+          isAuthenticated={this.state.authUser !== null}
         />
         <Route
           path="/article/:slug"
@@ -99,7 +99,8 @@ class App extends Component {
           path="/articles/create"
           component={CreateArticle}
           props={{
-            getArticleCategories: this.props.articlesService.getArticleCategories,
+            getArticleCategories: this.props.articlesService
+              .getArticleCategories,
             createArticle: this.props.articlesService.createArticle,
             token: this.state.authUser ? this.state.authUser.token : null
           }}
