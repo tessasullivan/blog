@@ -34,7 +34,7 @@ const SingleArticle = ({ article }) => (
             </p>
           </div>
           <div className="col-12 align-self-end text-center">
-          {/* eslint-disable-next-line */}
+            {/* eslint-disable-next-line */}
             <a
               href="#"
               className="scroll-down-1 scroll-down-inverse"

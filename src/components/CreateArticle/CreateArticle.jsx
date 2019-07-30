@@ -1,19 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import CreateArticleForm from './CreateArticleForm/CreateArticleForm';
+import CreateArticleForm from "./CreateArticleForm/CreateArticleForm";
 
-class CreateArticle extends React.Component {
+class CreateArticle extends Component {
   constructor() {
     super();
 
     this.state = {
-      title: '',
+      title: "",
       image: null,
-      content: '',
+      content: "",
       category: null,
       errors: [],
-      categories: [],
+      categories: []
     };
   }
 
@@ -21,26 +21,29 @@ class CreateArticle extends React.Component {
     const categories = await this.props.getArticleCategories();
 
     this.setState({
-      categories,
+      categories
     });
   }
 
-  handleSubmit = async (event) => {
+  handleSubmit = async event => {
     event.preventDefault();
 
     try {
       await this.props.createArticle(this.state, this.props.token);
-      this.props.history.push('/');
+      this.props.history.push("/");
     } catch (errors) {
       this.setState({ errors });
     }
-  }
+  };
 
-  handleInputChange = (event) => {
+  handleInputChange = event => {
     this.setState({
-      [event.target.name]: event.target.type === 'file' ? event.target.files[0] : event.target.value,
+      [event.target.name]:
+        event.target.type === "file"
+          ? event.target.files[0]
+          : event.target.value
     });
-  }
+  };
 
   render() {
     return (
@@ -59,8 +62,8 @@ CreateArticle.propTypes = {
   createArticle: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
+    push: PropTypes.func.isRequired
+  }).isRequired
 };
 
 export default CreateArticle;

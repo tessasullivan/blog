@@ -1,7 +1,7 @@
-import Axios from 'axios';
-import { validateAll } from 'indicative';
+import Axios from "axios";
+import { validateAll } from "indicative";
 
-import config from '../config';
+import config from "../config";
 
 export default class ArticlesService {
   async getArticles(url = `${config.apiUrl}/articles`) {
@@ -22,36 +22,41 @@ export default class ArticlesService {
 
   createArticle = async (data, token) => {
     if (!data.image) {
-      return Promise.reject([{
-        message: 'The image is required.',
-      }]);
+      return Promise.reject([
+        {
+          message: "The image is required."
+        }
+      ]);
     }
 
     try {
       const rules = {
-        title: 'required',
-        content: 'required',
-        category: 'required',
+        title: "required",
+        content: "required",
+        category: "required"
       };
 
       const messages = {
-        required: 'The {{ field }} is required.',
+        required: "The {{ field }} is required."
       };
 
       await validateAll(data, rules, messages);
 
       const image = await this.uploadToCloudinary(data.image);
-      const response = await Axios.post(`${config.apiUrl}/articles`, {
-        title: data.title,
-        content: data.content,
-        category_id: data.category,
-        imageUrl: image.secure_url,
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await Axios.post(
+        `${config.apiUrl}/articles`,
+        {
+          title: data.title,
+          content: data.content,
+          category_id: data.category,
+          imageUrl: image.secure_url
         },
-      });
-
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
 
       return response.data;
     } catch (errors) {
@@ -61,11 +66,11 @@ export default class ArticlesService {
 
       return Promise.reject(errors);
     }
-  }
+  };
 
   async uploadToCloudinary(image) {
     const form = new FormData();
-    form.append('file', image);
+    form.append("file", image);
     form.append("upload_preset", "ieyyb31b");
 
     const response = await Axios.post(

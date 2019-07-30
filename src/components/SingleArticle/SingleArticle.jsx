@@ -1,15 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import Article from './Article/Article';
+import Article from "./Article/Article";
 
-class SingleArticleContainer extends React.Component {
+class SingleArticleContainer extends Component {
   constructor() {
     super();
 
     this.state = {
       article: null,
-      loading: true,
+      loading: true
     };
   }
   async componentWillMount() {
@@ -20,16 +20,8 @@ class SingleArticleContainer extends React.Component {
   render() {
     return (
       <div>
-        {
-          !this.state.loading &&
-          <Article
-            article={this.state.article}
-          />
-        }
-        {
-          this.state.loading &&
-          <p className="text-center">LOADING ...</p>
-        }
+        {!this.state.loading && <Article article={this.state.article} />}
+        {this.state.loading && <p className="text-center">LOADING ...</p>}
       </div>
     );
   }
@@ -39,9 +31,9 @@ SingleArticleContainer.propTypes = {
   getArticle: PropTypes.func.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
-      slug: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
+      slug: PropTypes.string.isRequired
+    }).isRequired
+  }).isRequired
 };
 
 export default SingleArticleContainer;

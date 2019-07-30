@@ -1,15 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import Banner from '../../Banner/Banner';
+import Banner from "../../Banner/Banner";
 
 const CreateArticle = ({
-  handleInputChange, categories, handleSubmit, errors,
-}) => ((
+  handleInputChange,
+  categories,
+  handleSubmit,
+  errors
+}) => (
   <div>
     {/* Header */}
     <Banner
-      backgroundImage={`url(${process.env.PUBLIC_URL}/assets/img/bg-laptop.jpg)`}
+      backgroundImage={`url(${
+        process.env.PUBLIC_URL
+      }/assets/img/bg-laptop.jpg)`}
       title="Write an article"
     />
     {/* END Header */}
@@ -20,12 +25,24 @@ const CreateArticle = ({
           <div className="row">
             <div className="col-12 col-lg-12">
               <ul className="list-group">
-                {errors.map(error => <li key={error.message} className="list-group-item text-danger">{error.message}</li>)}
+                {errors.map(error => (
+                  <li
+                    key={error.message}
+                    className="list-group-item text-danger"
+                  >
+                    {error.message}
+                  </li>
+                ))}
               </ul>
               <form className="p-30 bg-gray rounded" onSubmit={handleSubmit}>
                 <div className="row">
                   <div className="form-group col-md-12 my-5">
-                    <input type="file" className="form-control" onChange={handleInputChange} name="image" />
+                    <input
+                      type="file"
+                      className="form-control"
+                      onChange={handleInputChange}
+                      name="image"
+                    />
                   </div>
                   <div className="form-group col-12 col-md-6">
                     <input
@@ -37,10 +54,18 @@ const CreateArticle = ({
                     />
                   </div>
                   <div className="form-group col-12 col-md-6">
-                    <select name="category" onChange={handleInputChange} id className="form-control form-control-lg">
+                    <select
+                      name="category"
+                      onChange={handleInputChange}
+                      id
+                      className="form-control form-control-lg"
+                    >
                       <option value>Select category</option>
-                      {categories.map(category =>
-                        <option key={category.id} value={category.id}>{category.name}</option>)}
+                      {categories.map(category => (
+                        <option key={category.id} value={category.id}>
+                          {category.name}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -55,7 +80,9 @@ const CreateArticle = ({
                   />
                 </div>
                 <div className="text-center">
-                  <button className="btn btn-lg btn-primary" type="submit">Create Article</button>
+                  <button className="btn btn-lg btn-primary" type="submit">
+                    Create Article
+                  </button>
                 </div>
               </form>
             </div>
@@ -65,18 +92,22 @@ const CreateArticle = ({
     </main>
     {/* END Main container */}
   </div>
-));
+);
 
 CreateArticle.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
-  categories: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-  })).isRequired,
+  categories: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired
+    })
+  ).isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  errors: PropTypes.arrayOf(PropTypes.shape({
-    message: PropTypes.string.isRequired,
-  })).isRequired,
+  errors: PropTypes.arrayOf(
+    PropTypes.shape({
+      message: PropTypes.string.isRequired
+    })
+  ).isRequired
 };
 
 export default CreateArticle;

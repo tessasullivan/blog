@@ -1,111 +1,108 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import { Route } from 'react-router-dom';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Route } from "react-router-dom";
 
-import Login from '../Login/Login';
-import Navbar from '../Navbar/Navbar';
-import Signup from '../Signup/Signup';
-import Footer from '../Footer/Footer';
-import Welcome from '../Welcome/Welcome';
-import CreateArticle from '../CreateArticle/CreateArticle';
-import SingleArticle from '../SingleArticle/SingleArticle';
+import Login from "../Login/Login";
+import Navbar from "../Navbar/Navbar";
+import Signup from "../Signup/Signup";
+import Footer from "../Footer/Footer";
+import Welcome from "../Welcome/Welcome";
+import CreateArticle from "../CreateArticle/CreateArticle";
+import SingleArticle from "../SingleArticle/SingleArticle";
 
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
-      authUser: null,
+      authUser: null
     };
   }
 
   componentWillMount() {
-    const user = localStorage.getItem('user');
+    const user = localStorage.getItem("user");
 
     if (user) {
       this.setState({
-        authUser: JSON.parse(user),
+        authUser: JSON.parse(user)
       });
     }
   }
 
-  setAuthUser = (authUser) => {
-    this.setState({
-      authUser,
-    }, () => {
-      localStorage.setItem('user', JSON.stringify(authUser));
-      this.props.history.push('/');
-    });
-  }
+  setAuthUser = authUser => {
+    this.setState(
+      {
+        authUser
+      },
+      () => {
+        localStorage.setItem("user", JSON.stringify(authUser));
+        this.props.history.push("/");
+      }
+    );
+  };
 
   render() {
     const { location } = this.props;
     return (
       <div>
-        {
-          location.pathname !== '/login' && location.pathname !== '/signup' &&
+        {location.pathname !== "/login" && location.pathname !== "/signup" && (
           <Navbar authUser={this.state.authUser} />
-        }
+        )}
         <Route
           exact
           path="/"
-          render={
-            props => (
-              <Welcome
-                {...props}
-                getArticles={this.props.articlesService.getArticles}
-              />
-            )
-          }
+          render={props => (
+            <Welcome
+              {...props}
+              getArticles={this.props.articlesService.getArticles}
+            />
+          )}
         />
         <Route
           path="/login"
-          render={
-            props => (<Login
+          render={props => (
+            <Login
               {...props}
               setAuthUser={this.setAuthUser}
               loginUser={this.props.authService.loginUser}
-            />)
-          }
+            />
+          )}
         />
         <Route
           path="/signup"
-          render={
-            props => (<Signup
+          render={props => (
+            <Signup
               {...props}
               registerUser={this.props.authService.registerUser}
               setAuthUser={this.setAuthUser}
-            />)
-            }
+            />
+          )}
         />
         <Route
           path="/article/:slug"
-          render={
-            props => (
-              <SingleArticle
-                {...props}
-                getArticle={this.props.articlesService.getArticle}
-              />
-            )
-          }
+          render={props => (
+            <SingleArticle
+              {...props}
+              getArticle={this.props.articlesService.getArticle}
+            />
+          )}
         />
         <Route
           path="/articles/create"
-          render={
-            props => (
-              <CreateArticle
-                {...props}
-                getArticleCategories={this.props.articlesService.getArticleCategories}
-                createArticle={this.props.articlesService.createArticle}
-                token={this.state.authUser.token}
-              />
-            )
-          }
+          render={props => (
+            <CreateArticle
+              {...props}
+              getArticleCategories={
+                this.props.articlesService.getArticleCategories
+              }
+              createArticle={this.props.articlesService.createArticle}
+              token={this.state.authUser.token}
+            />
+          )}
         />
-        {
-          location.pathname !== '/login' && location.pathname !== '/signup' &&
+        {location.pathname !== "/login" && location.pathname !== "/signup" && (
           <Footer />
-        }
+        )}
       </div>
     );
   }
@@ -113,13 +110,13 @@ class App extends Component {
 
 App.propTypes = {
   location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired
   }).isRequired,
   history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
+    push: PropTypes.func.isRequired
   }).isRequired,
   authService: PropTypes.objectOf(PropTypes.func).isRequired,
-  articlesService: PropTypes.objectOf(PropTypes.func).isRequired,
+  articlesService: PropTypes.objectOf(PropTypes.func).isRequired
 };
 
 export default App;

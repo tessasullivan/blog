@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import Articles from './Articles/Articles';
+import Articles from "./Articles/Articles";
 
 class Welcome extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      articles: {},
+      articles: {}
     };
   }
 
@@ -18,11 +18,11 @@ class Welcome extends React.Component {
     this.setState({ articles });
   }
 
-  handlePagination = async (url) => {
+  handlePagination = async url => {
     const articles = await this.props.getArticles(url);
 
     this.setState({ articles });
-  }
+  };
 
   render() {
     return (
@@ -37,7 +37,7 @@ class Welcome extends React.Component {
 }
 
 Welcome.propTypes = {
-  getArticles: PropTypes.func.isRequired,
+  getArticles: PropTypes.func.isRequired
 };
 
 export default Welcome;
