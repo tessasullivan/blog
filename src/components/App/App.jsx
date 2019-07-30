@@ -8,14 +8,15 @@ import Signup from "../Signup/Signup";
 import Footer from "../Footer/Footer";
 import Welcome from "../Welcome/Welcome";
 import CreateArticle from "../CreateArticle/CreateArticle";
-import SingleArticle from "../SingleArticle/SingleArticle";
+import SingleArticle from "../SingleArticle/SingleArticleContainer";
 
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
-      authUser: null
+      authUser: null,
+      articles: [],
     };
   }
 
@@ -27,6 +28,10 @@ class App extends Component {
         authUser: JSON.parse(user)
       });
     }
+  }
+
+  setArticles = articles => {
+    this.setState({articles});
   }
 
   setAuthUser = authUser => {
@@ -55,6 +60,7 @@ class App extends Component {
             <Welcome
               {...props}
               getArticles={this.props.articlesService.getArticles}
+              setArticles={this.setArticles}
             />
           )}
         />
@@ -84,6 +90,7 @@ class App extends Component {
             <SingleArticle
               {...props}
               getArticle={this.props.articlesService.getArticle}
+              articles={this.state.articles}
             />
           )}
         />

@@ -23,8 +23,7 @@ const Articles = ({ articles, handlePagination, nextUrl, prevUrl }) => (
               </div>
             ))}
           <nav className="flexbox mt-50 mb-50">
-            {/* eslint-disable-next-line */}
-            href="#"
+            {/* eslint-disable-next-line  */}
             <a
               className={`btn btn-white ${prevUrl ? "" : "disabled"}`}
               href="#"

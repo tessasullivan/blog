@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import Article from "./Article/Article";
+import Article from "./Article/SingleArticle";
 
 class SingleArticleContainer extends Component {
   constructor() {
@@ -13,13 +13,22 @@ class SingleArticleContainer extends Component {
     };
   }
   async componentWillMount() {
-    const article = await this.props.getArticle(this.props.match.params.slug);
-    this.setState({ article, loading: false });
+    // Try to find article from set passed to container
+    let article = this.props.articles.find(article => article.slug === this.props.match.params.slug);
+
+    // If it is found in the set passed, set state, otherwise, request article from server
+    if (article) {
+      this.setState({ article, loading: false });
+    } else {
+      article = await this.props.getArticle(this.props.match.params.slug);
+      this.setState({ article, loading: false });
+    }
   }
 
   render() {
     return (
       <div>
+        {/* Wait until article is retrieved to pass it to the rendering component */}
         {!this.state.loading && <Article article={this.state.article} />}
         {this.state.loading && <p className="text-center">LOADING ...</p>}
       </div>
