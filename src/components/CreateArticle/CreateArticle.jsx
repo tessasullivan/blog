@@ -27,7 +27,7 @@ class CreateArticle extends Component {
         articleInArray => articleInArray.slug === this.props.match.params.slug
       );
       if (!article) {
-        this.props.history.push('/user/articles');
+        this.props.history.push("/user/articles");
         return;
       }
       this.setState({
@@ -58,11 +58,11 @@ class CreateArticle extends Component {
         this.state.article,
         this.props.token
       );
-      this.props.notyService.success('Article updated successfully');
+      this.props.notyService.success("Article updated successfully");
       this.props.history.push("/");
     } catch (errors) {
       console.log(errors);
-      this.props.notyService.error('Please check for errors');
+      this.props.notyService.error("Please check for errors");
       this.setState({ errors });
     }
   };
@@ -72,10 +72,10 @@ class CreateArticle extends Component {
 
     try {
       await this.props.createArticle(this.state, this.props.token);
-      this.props.notyService.success('Article created successfully');
+      this.props.notyService.success("Article created successfully");
       this.props.history.push("/");
     } catch (errors) {
-      this.props.notyService.error('Please check for errors');
+      this.props.notyService.error("Please check for errors");
       this.setState({ errors });
     }
   };
@@ -109,12 +109,36 @@ class CreateArticle extends Component {
 
 CreateArticle.propTypes = {
   getArticleCategories: PropTypes.func.isRequired,
-  createArticle: PropTypes.func.isRequired,
+  createArticle: PropTypes.func,
   token: PropTypes.string.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
   }).isRequired,
   updateArticle: PropTypes.func,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      slug: PropTypes.string
+    }).isRequired
+  }).isRequired,
+  articles: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      imageUrl: PropTypes.string.isRequired,
+      category: PropTypes.shape({
+        name: PropTypes.string.isRequired
+      }).isRequired,
+      created_at: PropTypes.string,
+    })
+  ),
+  notyService: PropTypes.shape({
+    success: PropTypes.func.isRequired,
+    error: PropTypes.func.isRequired,
+  }),
 };
 
+CreateArticle.defaultProps = {
+  updateArticle: () => {},
+  createArticle: () => {},
+  articles: []
+};
 export default CreateArticle;

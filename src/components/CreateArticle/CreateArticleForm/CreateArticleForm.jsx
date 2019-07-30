@@ -47,6 +47,7 @@ const CreateArticle = ({
                       type="file"
                       className="form-control"
                       onChange={handleInputChange}
+                      value={category || ''}
                       name="image"
                     />
                   </div>
@@ -63,21 +64,20 @@ const CreateArticle = ({
                   <div className="form-group col-12 col-md-6">
                     <select
                       name="category"
-                      value={category}
+                      value={category || ''}
                       onChange={handleInputChange}
-                      id
                       className="form-control form-control-lg"
                     >
                       <option value>Select category</option>
-                      {categories.map(category => (
-                        <option key={category.id} value={category.id}>
-                          {category.name}
+                      {categories.map(categoryInArray => (
+                        <option key={categoryInArray.id} value={categoryInArray.id}>
+                          {categoryInArray.name}
                         </option>
                       ))}
                     </select>
                   </div>
                 </div>
-                <div className="form-group">
+                <div className="form-group"> 
                   <textarea
                     className="form-control form-control-lg"
                     rows={4}
@@ -85,7 +85,6 @@ const CreateArticle = ({
                     name="content"
                     value={content}
                     onChange={handleInputChange}
-                    defaultValue=""
                   />
                 </div>
                 <div className="text-center">
@@ -120,5 +119,10 @@ CreateArticle.propTypes = {
   editing: PropTypes.bool.isRequired,
   updateArticle: PropTypes.func.isRequired,
 };
+
+CreateArticle.defaultProps = {
+  article: null,
+  category: null,
+}
 
 export default CreateArticle;

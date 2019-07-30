@@ -58,9 +58,9 @@ class UserArticles extends Component {
 }
 
 UserArticles.propTypes = {
-  getArticles: PropTypes.func.isRequired,
-  setArticles: PropTypes.func.isRequired,
-  deleteArticle: PropTypes.func.isRequired,
+  getArticles: PropTypes.func,
+  setArticles: PropTypes.func,
+  deleteArticle: PropTypes.func,
 };
 
 export default UserArticles;
