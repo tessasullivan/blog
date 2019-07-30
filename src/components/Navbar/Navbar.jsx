@@ -46,9 +46,9 @@ const Navbar = ({ authUser }) => (
                 <i className="fa fa-caret-down" />
               </a>
               <div className="nav-submenu">
-                <a className="nav-link" href="page-login.html">
+                <Link className="nav-link" to="/user/articles">
                   My articles
-                </a>
+                </Link>
                 <a className="nav-link" href>
                   Logout
                 </a>

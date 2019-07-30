@@ -4,6 +4,14 @@ import { validateAll } from "indicative";
 import config from "../config";
 
 export default class ArticlesService {
+  async getUserArticles(token, url = `${config.apiUrl}/user/articles`) {
+    const response = await Axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
+    return response.data.data;
+  }
   async getArticles(url = `${config.apiUrl}/articles`) {
     const response = await Axios.get(url);
 
@@ -16,12 +24,15 @@ export default class ArticlesService {
   }
   async getArticleCategories() {
     // First, check if categories are set in localStorage, otherwise, request them from the server
-    const categories = JSON.parse(localStorage.getItem('categories'));
+    const categories = JSON.parse(localStorage.getItem("categories"));
     if (categories) {
       return categories;
     }
     const response = await Axios.get(`${config.apiUrl}/categories`);
-    localStorage.setItem('categories', JSON.stringify(response.data.categories));
+    localStorage.setItem(
+      "categories",
+      JSON.stringify(response.data.categories)
+    );
     return response.data.categories;
   }
 

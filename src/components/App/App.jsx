@@ -11,6 +11,7 @@ import CreateArticle from "../CreateArticle/CreateArticle";
 import SingleArticle from "../SingleArticle/SingleArticleContainer";
 import Auth from "../Auth/Auth";
 import RedirectIfAuth from "../RedirectIfAuth/RedirectIfAuth";
+import UserArticles from "../UserArticles/UserArticles";
 
 class App extends Component {
   constructor() {
@@ -72,7 +73,7 @@ class App extends Component {
           component={Login}
           props={{
             setAuthUser: this.setAuthUser,
-            loginUser: this.props.authService.loginUser,
+            loginUser: this.props.authService.loginUser
           }}
           isAuthenticated={this.state.authUser !== null}
         />
@@ -81,7 +82,7 @@ class App extends Component {
           component={Signup}
           props={{
             setAuthUser: this.setAuthUser,
-            loginUser: this.props.authService.loginUser,
+            loginUser: this.props.authService.loginUser
           }}
           isAuthenticated={this.state.authUser !== null}
         />
@@ -103,6 +104,16 @@ class App extends Component {
               .getArticleCategories,
             createArticle: this.props.articlesService.createArticle,
             token: this.state.authUser ? this.state.authUser.token : null
+          }}
+          isAuthenticated={this.state.authUser !== null}
+          />
+        <Auth
+          path="/user/articles"
+          component={UserArticles}
+          props={{
+            getUserArticles: this.props.articlesService.getUserArticles,
+            setArticles: this.setArticles,
+            token:this.state.authUser ? this.state.authUser.token: null,
           }}
           isAuthenticated={this.state.authUser !== null}
         />
