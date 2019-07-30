@@ -13,17 +13,57 @@ class CreateArticle extends Component {
       content: "",
       category: null,
       errors: [],
-      categories: []
+      categories: [],
+      editing: false,
+      article: null
     };
   }
 
   async componentWillMount() {
     const categories = await this.props.getArticleCategories();
 
-    this.setState({
-      categories
-    });
+    if (this.props.match.params.slug) {
+      const article = this.props.articles.find(
+        articleInArray => articleInArray.slug === this.props.match.params.slug
+      );
+      if (!article) {
+        this.props.history.push('/user/articles');
+        return;
+      }
+      this.setState({
+        editing: true,
+        article,
+        categories,
+        title: article.title,
+        category: article.category_id,
+        content: article.content
+      });
+    } else {
+      this.setState({
+        categories
+      });
+    }
   }
+
+  updateArticle = async event => {
+    event.preventDefault();
+    try {
+      await this.props.updateArticle(
+        {
+          title: this.state.title,
+          image: this.state.image,
+          content: this.state.content,
+          category: this.state.category
+        },
+        this.state.article,
+        this.props.token
+      );
+      this.props.history.push("/");
+    } catch (errors) {
+      console.log(errors);
+      this.setState({ errors });
+    }
+  };
 
   handleSubmit = async event => {
     event.preventDefault();
@@ -52,6 +92,12 @@ class CreateArticle extends Component {
         categories={this.state.categories}
         handleSubmit={this.handleSubmit}
         errors={this.state.errors}
+        editing={this.state.editing}
+        article={this.state.article}
+        title={this.state.title}
+        content={this.state.content}
+        category={this.state.category}
+        updateArticle={this.updateArticle}
       />
     );
   }
@@ -63,7 +109,8 @@ CreateArticle.propTypes = {
   token: PropTypes.string.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
-  }).isRequired
+  }).isRequired,
+  updateArticle: PropTypes.func,
 };
 
 export default CreateArticle;

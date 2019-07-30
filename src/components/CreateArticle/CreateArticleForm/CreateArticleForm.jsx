@@ -7,7 +7,13 @@ const CreateArticle = ({
   handleInputChange,
   categories,
   handleSubmit,
-  errors
+  errors,
+  editing,
+  article,
+  title,
+  category,
+  content, 
+  updateArticle
 }) => (
   <div>
     {/* Header */}
@@ -15,7 +21,7 @@ const CreateArticle = ({
       backgroundImage={`url(${
         process.env.PUBLIC_URL
       }/assets/img/bg-laptop.jpg)`}
-      title="Write an article"
+      title={editing ? `Editing article: ${article.title}`: "Write an article"}
     />
     {/* END Header */}
     {/* Main container */}
@@ -34,7 +40,7 @@ const CreateArticle = ({
                   </li>
                 ))}
               </ul>
-              <form className="p-30 bg-gray rounded" onSubmit={handleSubmit}>
+              <form className="p-30 bg-gray rounded" onSubmit={editing? updateArticle: handleSubmit}>
                 <div className="row">
                   <div className="form-group col-md-12 my-5">
                     <input
@@ -50,12 +56,14 @@ const CreateArticle = ({
                       type="text"
                       name="title"
                       placeholder="Title"
+                      value={title}
                       onChange={handleInputChange}
                     />
                   </div>
                   <div className="form-group col-12 col-md-6">
                     <select
                       name="category"
+                      value={category}
                       onChange={handleInputChange}
                       id
                       className="form-control form-control-lg"
@@ -75,13 +83,14 @@ const CreateArticle = ({
                     rows={4}
                     placeholder="Content"
                     name="content"
+                    value={content}
                     onChange={handleInputChange}
                     defaultValue=""
                   />
                 </div>
                 <div className="text-center">
                   <button className="btn btn-lg btn-primary" type="submit">
-                    Create Article
+                    {editing ? 'Update Article': 'Create Article'}
                   </button>
                 </div>
               </form>
@@ -107,7 +116,9 @@ CreateArticle.propTypes = {
     PropTypes.shape({
       message: PropTypes.string.isRequired
     })
-  ).isRequired
+  ).isRequired,
+  editing: PropTypes.bool.isRequired,
+  updateArticle: PropTypes.func.isRequired,
 };
 
 export default CreateArticle;

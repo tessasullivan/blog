@@ -26,6 +26,9 @@ class UserArticles extends Component {
     this.props.setArticles(articles.data);
   };
 
+  editArticle = article => {
+    this.props.history.push(`/article/edit/${article.slug}`);
+  }
   deleteArticle = async id => {
     console.log(`delete article id ${id} token ${this.props.token}`)
     await this.props.deleteArticle(id, this.props.token);
@@ -47,6 +50,7 @@ class UserArticles extends Component {
         nextUrl={this.state.articles.next_page_url}
         prevUrl={this.state.articles.prev_page_url}
         handlePagination={this.handlePagination}
+        editArticle={this.editArticle}
         deleteArticle={this.deleteArticle}
       />
     );
@@ -56,7 +60,7 @@ class UserArticles extends Component {
 UserArticles.propTypes = {
   getArticles: PropTypes.func.isRequired,
   setArticles: PropTypes.func.isRequired,
-  deleteArticle: PropTypes.func.isRequired
+  deleteArticle: PropTypes.func.isRequired,
 };
 
 export default UserArticles;
