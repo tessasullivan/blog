@@ -18,7 +18,7 @@ const Login = ({ handleInputChange, handleSubmit, errors }) => (
           <input
             type="text"
             className="form-control"
-            placeholder="Username"
+            placeholder="Email Address"
             onChange={handleInputChange}
             name="email"
           />

@@ -27,11 +27,15 @@ const Navbar = ({ authUser }) => (
               Home
             </Link>
           </li>
+
+          {/* If user is not logged in, do not show Write Article link */}
+          {authUser && (
           <li className="nav-item">
             <Link className="nav-link" to="/articles/create">
               Write new article
             </Link>
           </li>
+          )}
           {/* If user is authenticated, show the my articles & logout options */}
 
           {authUser && (
