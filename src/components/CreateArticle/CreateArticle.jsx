@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-
+import {EditorState} from 'draft-js';
 import CreateArticleForm from "./CreateArticleForm/CreateArticleForm";
 
 class CreateArticle extends Component {
@@ -10,7 +10,7 @@ class CreateArticle extends Component {
     this.state = {
       title: "",
       image: null,
-      content: "",
+      content: EditorState.createEmpty(),
       category: null,
       errors: [],
       categories: [],
@@ -67,6 +67,14 @@ class CreateArticle extends Component {
     }
   };
 
+  handleEditorState = editorState => {
+    console.log(editorState);
+    this.setState({
+      content: editorState,
+    })
+  }
+
+
   handleSubmit = async event => {
     event.preventDefault();
 
@@ -102,6 +110,7 @@ class CreateArticle extends Component {
         content={this.state.content}
         category={this.state.category}
         updateArticle={this.updateArticle}
+        handleEditorState={this.handleEditorState}
       />
     );
   }
