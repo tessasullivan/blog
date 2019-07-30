@@ -44,22 +44,26 @@ class App extends Component {
       },
       () => {
         localStorage.setItem("user", JSON.stringify(authUser));
+        this.props.notyService.success("Successfully logged in");
         this.props.history.push("/");
       }
     );
   };
 
   removeAuthUser = () => {
-    localStorage.removeItem('user');
-    this.setState({authUser: null});
-  }
+    localStorage.removeItem("user");
+    this.props.notyService.success("Successfully logged out");
+    this.setState({ authUser: null });
+  };
   render() {
     const { location } = this.props;
     return (
       <div>
         {location.pathname !== "/login" && location.pathname !== "/signup" && (
-          <Navbar authUser={this.state.authUser} 
-          removeAuthUser={this.removeAuthUser}/>
+          <Navbar
+            authUser={this.state.authUser}
+            removeAuthUser={this.removeAuthUser}
+          />
         )}
         <Route
           exact
@@ -110,9 +114,10 @@ class App extends Component {
               .getArticleCategories,
             createArticle: this.props.articlesService.createArticle,
             token: this.state.authUser ? this.state.authUser.token : null,
+            noytService: this.props.notyService
           }}
           isAuthenticated={this.state.authUser !== null}
-          />
+        />
         <Auth
           path="/user/articles"
           component={UserArticles}
@@ -123,17 +128,17 @@ class App extends Component {
             token: this.state.authUser ? this.state.authUser.token : null
           }}
           isAuthenticated={this.state.authUser !== null}
-          />
+        />
         <Auth
           path="/article/edit/:slug"
           component={CreateArticle}
           props={{
             getArticleCategories: this.props.articlesService
-            .getArticleCategories,
+              .getArticleCategories,
             createArticle: this.props.articlesService.createArticle,
             token: this.state.authUser ? this.state.authUser.token : null,
             articles: this.state.articles,
-            updateArticle: this.props.articlesService.updateArticle,
+            updateArticle: this.props.articlesService.updateArticle
           }}
           isAuthenticated={this.state.authUser !== null}
         />

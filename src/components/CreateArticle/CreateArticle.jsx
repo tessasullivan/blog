@@ -58,9 +58,11 @@ class CreateArticle extends Component {
         this.state.article,
         this.props.token
       );
+      this.props.notyService.success('Article updated successfully');
       this.props.history.push("/");
     } catch (errors) {
       console.log(errors);
+      this.props.notyService.error('Please check for errors');
       this.setState({ errors });
     }
   };
@@ -70,8 +72,10 @@ class CreateArticle extends Component {
 
     try {
       await this.props.createArticle(this.state, this.props.token);
+      this.props.notyService.success('Article created successfully');
       this.props.history.push("/");
     } catch (errors) {
+      this.props.notyService.error('Please check for errors');
       this.setState({ errors });
     }
   };
