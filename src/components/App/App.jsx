@@ -5,7 +5,7 @@ import { Route } from "react-router-dom";
 import Login from "../Login/Login";
 import Navbar from "../Navbar/Navbar";
 import Signup from "../Signup/Signup";
-import Footer from "../Footer/Footer";
+// import Footer from "../Footer/Footer";
 import Welcome from "../Welcome/Welcome";
 import CreateArticle from "../CreateArticle/CreateArticle";
 import SingleArticle from "../SingleArticle/SingleArticleContainer";
@@ -142,9 +142,9 @@ class App extends Component {
           }}
           isAuthenticated={this.state.authUser !== null}
         />
-        {location.pathname !== "/login" && location.pathname !== "/signup" && (
+        {/* {location.pathname !== "/login" && location.pathname !== "/signup" && (
           <Footer />
-        )}
+        )} */}
       </div>
     );
   }
