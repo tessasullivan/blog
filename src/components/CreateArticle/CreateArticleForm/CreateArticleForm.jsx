@@ -17,7 +17,6 @@ const CreateArticleForm = ({
   category,
   content, 
   updateArticle,
-  handleEditorState
 }) => (
   <div>
     {/* Header */}
