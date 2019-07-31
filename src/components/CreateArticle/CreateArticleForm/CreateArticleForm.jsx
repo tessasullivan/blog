@@ -129,7 +129,7 @@ CreateArticle.propTypes = {
   }),
   title: PropTypes.string.isRequired,
   content: PropTypes.objectOf(PropTypes.any).isRequired,
-  category: PropTypes.number,
+  category: PropTypes.string,
   updateArticle: PropTypes.func.isRequired,
 };
 

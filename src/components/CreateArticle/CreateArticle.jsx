@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {EditorState} from 'draft-js';
+import { EditorState, convertToRaw } from "draft-js";
+import draftToHtml from "draftjs-to-html";
 import CreateArticleForm from "./CreateArticleForm/CreateArticleForm";
 
 class CreateArticle extends Component {
@@ -52,7 +53,7 @@ class CreateArticle extends Component {
         {
           title: this.state.title,
           image: this.state.image,
-          content: this.state.content,
+          content: draftToHtml(convertToRaw(this.state.content.getCurrentContent())),
           category: this.state.category
         },
         this.state.article,
@@ -68,18 +69,24 @@ class CreateArticle extends Component {
   };
 
   handleEditorState = editorState => {
-    console.log(editorState);
     this.setState({
-      content: editorState,
-    })
-  }
-
+      content: editorState
+    });
+  };
 
   handleSubmit = async event => {
     event.preventDefault();
 
     try {
-      await this.props.createArticle(this.state, this.props.token);
+      await this.props.createArticle(
+        {
+          title: this.state.title,
+          content: draftToHtml(convertToRaw(this.state.content.getCurrentContent())),
+          category: this.state.category,
+          image: this.state.image
+        },
+        this.props.token
+      );
       this.props.notyService.success("Article created successfully");
       this.props.history.push("/");
     } catch (errors) {
@@ -89,6 +96,7 @@ class CreateArticle extends Component {
   };
 
   handleInputChange = event => {
+    // console.log(`${event.target.name}: ${event.target.value} ${typeof (event.target.value)}`);
     this.setState({
       [event.target.name]:
         event.target.type === "file"
@@ -136,13 +144,13 @@ CreateArticle.propTypes = {
       category: PropTypes.shape({
         name: PropTypes.string.isRequired
       }).isRequired,
-      created_at: PropTypes.string,
+      created_at: PropTypes.string
     })
   ),
   notyService: PropTypes.shape({
     success: PropTypes.func.isRequired,
-    error: PropTypes.func.isRequired,
-  }),
+    error: PropTypes.func.isRequired
+  })
 };
 
 CreateArticle.defaultProps = {
