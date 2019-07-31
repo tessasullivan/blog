@@ -31,7 +31,7 @@ const Articles = ({ articles, handlePagination, nextUrl, prevUrl }) => (
             >
               <i className="ti-arrow-left fs-9 ml-4" /> Previous Page
             </a>
-            {/* eslint-disable-next-line */}
+            {/* eslint-disable-next-line  */}
             <a
               className={`btn btn-white ${nextUrl ? "" : "disabled"}`}
               href="#"
@@ -54,13 +54,13 @@ Articles.propTypes = {
   ),
   handlePagination: PropTypes.func.isRequired,
   nextUrl: PropTypes.string,
-  prevUrl: PropTypes.string,
+  prevUrl: PropTypes.string
 };
 
 Articles.defaultProps = {
   articles: [],
   nextUrl: null,
-  prevUrl: null,
-}
+  prevUrl: null
+};
 
 export default Articles;

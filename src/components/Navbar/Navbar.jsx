@@ -27,17 +27,15 @@ const Navbar = ({ authUser, removeAuthUser }) => (
               Home
             </Link>
           </li>
-
           {/* If user is not logged in, do not show Write Article link */}
           {authUser && (
-          <li className="nav-item">
-            <Link className="nav-link" to="/articles/create">
-              Write new article
-            </Link>
-          </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/articles/create">
+                Write new article
+              </Link>
+            </li>
           )}
           {/* If user is authenticated, show the my articles & logout options */}
-
           {authUser && (
             <li className="nav-item">
               {/* eslint-disable-next-line */}
@@ -49,13 +47,13 @@ const Navbar = ({ authUser, removeAuthUser }) => (
                 <Link className="nav-link" to="/user/articles">
                   My articles
                 </Link>
-                <Link className="nav-link" to="/" onClick={removeAuthUser} >
+                <Link className="nav-link" to="/" onClick={removeAuthUser}>
                   Logout
                 </Link>
               </div>
             </li>
           )}
-          {/* If a user is authenticated, hide the login and register options */}
+                    {/* If a user is authenticated, hide the login and register options */}
 
           {!authUser && (
             <li className="nav-item">

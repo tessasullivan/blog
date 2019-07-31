@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const Login = ({ handleInputChange, handleSubmit, errors }) => (
   <div
@@ -18,7 +19,7 @@ const Login = ({ handleInputChange, handleSubmit, errors }) => (
           <input
             type="text"
             className="form-control"
-            placeholder="Email Address"
+            placeholder="Email address"
             onChange={handleInputChange}
             name="email"
           />
@@ -38,21 +39,6 @@ const Login = ({ handleInputChange, handleSubmit, errors }) => (
             <small className="text-danger">{errors.password}</small>
           )}
         </div>
-        <div className="form-group flexbox py-10">
-          <label className="custom-control custom-checkbox">
-            <input
-              type="checkbox"
-              className="custom-control-input"
-              defaultChecked
-            />
-            <span className="custom-control-indicator" />
-            <span className="custom-control-description">Remember me</span>
-          </label>
-          {/* eslint-disable-next-line */}
-          <a className="text-muted hover-primary fs-13" href="#">
-            Forgot password?
-          </a>
-        </div>
         <div className="form-group">
           <button className="btn btn-bold btn-block btn-primary" type="submit">
             Login
@@ -62,7 +48,7 @@ const Login = ({ handleInputChange, handleSubmit, errors }) => (
       <hr className="w-30" />
       <p className="text-center text-muted fs-13 mt-20">
         Dont have an account?
-        <a href="register.html">Sign up</a>
+        <Link to="/signup">Sign up</Link>
       </p>
     </div>
   </div>

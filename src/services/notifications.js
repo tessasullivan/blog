@@ -1,17 +1,17 @@
-import Noty from "noty";
+import Noty from 'noty';
 
 export default class NotificationsService {
   success(message) {
     (new Noty({
       text: message,
-      type: "success"
+      type: 'success',
     })).show();
   }
 
   error(message) {
     (new Noty({
       text: message,
-      type: "error"
+      type: 'error',
     })).show();
   }
 }

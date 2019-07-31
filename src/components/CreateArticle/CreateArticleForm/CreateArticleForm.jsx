@@ -5,7 +5,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 import Banner from "../../Banner/Banner";
 
-const CreateArticleForm = ({
+const CreateArticle = ({
   handleInputChange,
   handleEditorState,
   categories,
@@ -15,8 +15,8 @@ const CreateArticleForm = ({
   article,
   title,
   category,
-  content, 
-  updateArticle,
+  content,
+  updateArticle
 }) => (
   <div>
     {/* Header */}
@@ -24,7 +24,7 @@ const CreateArticleForm = ({
       backgroundImage={`url(${
         process.env.PUBLIC_URL
       }/assets/img/bg-laptop.jpg)`}
-      title={editing ? `Editing article: ${article.title}` : "Write an article"}
+      title={editing ? `Editing Article: ${article.title}` : "Write an article"}
     />
     {/* END Header */}
     {/* Main container */}
@@ -69,8 +69,8 @@ const CreateArticleForm = ({
                   <div className="form-group col-12 col-md-6">
                     <select
                       name="category"
-                      value={category || ""}
                       onChange={handleInputChange}
+                      value={category || ""}
                       className="form-control form-control-lg"
                     >
                       <option value>Select category</option>
@@ -90,14 +90,6 @@ const CreateArticleForm = ({
                     editorState={content}
                     onEditorStateChange={handleEditorState}
                   />
-                  {/* <textarea
-                    className="form-control form-control-lg"
-                    rows={4}
-                    placeholder="Content"
-                    name="content"
-                    value={content}
-                    onChange={handleInputChange}
-                  /> */}
                 </div>
                 <div className="text-center">
                   <button className="btn btn-lg btn-primary" type="submit">
@@ -114,7 +106,7 @@ const CreateArticleForm = ({
   </div>
 );
 
-CreateArticleForm.propTypes = {
+CreateArticle.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
   categories: PropTypes.arrayOf(
     PropTypes.shape({
@@ -130,17 +122,17 @@ CreateArticleForm.propTypes = {
   ).isRequired,
   editing: PropTypes.bool.isRequired,
   article: PropTypes.shape({
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
   }),
   title: PropTypes.string.isRequired,
   content: PropTypes.objectOf(PropTypes.any).isRequired,
   category: PropTypes.string,
-  updateArticle: PropTypes.func.isRequired,
+  updateArticle: PropTypes.func.isRequired
 };
 
-CreateArticleForm.defaultProps = {
+CreateArticle.defaultProps = {
   article: null,
   category: null
 };
 
-export default CreateArticleForm;
+export default CreateArticle;

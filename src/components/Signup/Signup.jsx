@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import SignUpForm from "./SignUpForm/SignupForm";
+import SignUpForm from "./SignUpForm/SignUpForm";
 
 class Signup extends Component {
   constructor() {

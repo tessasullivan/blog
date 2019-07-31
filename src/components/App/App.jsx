@@ -2,16 +2,16 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Route } from "react-router-dom";
 
+import Auth from "../Auth/Auth";
 import Login from "../Login/Login";
 import Navbar from "../Navbar/Navbar";
 import Signup from "../Signup/Signup";
-// import Footer from "../Footer/Footer";
+import Footer from "../Footer/Footer";
 import Welcome from "../Welcome/Welcome";
+import UserArticles from "../UserArticles/UserArticles";
 import CreateArticle from "../CreateArticle/CreateArticle";
 import SingleArticle from "../SingleArticle/SingleArticleContainer";
-import Auth from "../Auth/Auth";
 import RedirectIfAuth from "../RedirectIfAuth/RedirectIfAuth";
-import UserArticles from "../UserArticles/UserArticles";
 
 class App extends Component {
   constructor() {
@@ -44,7 +44,7 @@ class App extends Component {
       },
       () => {
         localStorage.setItem("user", JSON.stringify(authUser));
-        this.props.notyService.success("Successfully logged in");
+        this.props.notyService.success("Successfully logged in!");
         this.props.history.push("/");
       }
     );
@@ -52,9 +52,10 @@ class App extends Component {
 
   removeAuthUser = () => {
     localStorage.removeItem("user");
-    this.props.notyService.success("Successfully logged out");
+    this.props.notyService.success("Successfully logged out!");
     this.setState({ authUser: null });
   };
+
   render() {
     const { location } = this.props;
     return (
@@ -91,7 +92,7 @@ class App extends Component {
           component={Signup}
           props={{
             setAuthUser: this.setAuthUser,
-            loginUser: this.props.authService.loginUser
+            registerUser: this.props.authService.registerUser
           }}
           isAuthenticated={this.state.authUser !== null}
         />
@@ -114,7 +115,7 @@ class App extends Component {
               .getArticleCategories,
             createArticle: this.props.articlesService.createArticle,
             token: this.state.authUser ? this.state.authUser.token : null,
-            noytService: this.props.notyService
+            notyService: this.props.notyService
           }}
           isAuthenticated={this.state.authUser !== null}
         />
@@ -138,13 +139,14 @@ class App extends Component {
             createArticle: this.props.articlesService.createArticle,
             token: this.state.authUser ? this.state.authUser.token : null,
             articles: this.state.articles,
-            updateArticle: this.props.articlesService.updateArticle
+            updateArticle: this.props.articlesService.updateArticle,
+            notyService: this.props.notyService
           }}
           isAuthenticated={this.state.authUser !== null}
         />
-        {/* {location.pathname !== "/login" && location.pathname !== "/signup" && (
+        {location.pathname !== "/login" && location.pathname !== "/signup" && (
           <Footer />
-        )} */}
+        )}
       </div>
     );
   }
@@ -158,7 +160,8 @@ App.propTypes = {
     push: PropTypes.func.isRequired
   }).isRequired,
   authService: PropTypes.objectOf(PropTypes.func).isRequired,
-  articlesService: PropTypes.objectOf(PropTypes.func).isRequired
+  articlesService: PropTypes.objectOf(PropTypes.func).isRequired,
+  notyService: PropTypes.objectOf(PropTypes.func).isRequired
 };
 
 export default App;

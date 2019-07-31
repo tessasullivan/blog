@@ -4,12 +4,19 @@ import PropTypes from "prop-types";
 import Banner from "../../Banner/Banner";
 import Article from "../../Article/Article";
 
-const Articles = ({ articles, handlePagination, nextUrl, prevUrl, deleteArticle, editArticle }) => (
+const Articles = ({
+  articles,
+  handlePagination,
+  nextUrl,
+  prevUrl,
+  deleteArticle,
+  editArticle
+}) => (
   <div>
     <Banner
       backgroundImage={`url(${process.env.PUBLIC_URL}/assets/img/bg-gift.jpg)`}
       title="My Articles"
-      // subTitle="Here are the articles created by me"
+      // subTitle="Here are the articles created by you."
     />
 
     <main className="main-content bg-gray">
@@ -20,8 +27,18 @@ const Articles = ({ articles, handlePagination, nextUrl, prevUrl, deleteArticle,
               <div key={article.id}>
                 <Article article={article} />
                 <div className="text-center">
-                  <button onClick={() => editArticle(article)}className="btn btn-info mr-5">Edit</button>
-                  <button onClick={() => deleteArticle(article.id)} className="btn btn-danger">Delete</button>
+                  <button
+                    onClick={() => editArticle(article)}
+                    className="btn btn-info mr-5"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => deleteArticle(article.id)}
+                    className="btn btn-danger"
+                  >
+                    Delete
+                  </button>
                 </div>
                 <hr />
               </div>
@@ -35,7 +52,7 @@ const Articles = ({ articles, handlePagination, nextUrl, prevUrl, deleteArticle,
             >
               <i className="ti-arrow-left fs-9 ml-4" /> Previous Page
             </a>
-            {/* eslint-disable-next-line */}
+            {/* eslint-disable-next-line  */}
             <a
               className={`btn btn-white ${nextUrl ? "" : "disabled"}`}
               href="#"
@@ -58,7 +75,9 @@ Articles.propTypes = {
   ),
   handlePagination: PropTypes.func.isRequired,
   nextUrl: PropTypes.string,
-  prevUrl: PropTypes.string
+  prevUrl: PropTypes.string,
+  deleteArticle: PropTypes.func.isRequired,
+  editArticle: PropTypes.func.isRequired
 };
 
 Articles.defaultProps = {
@@ -66,4 +85,5 @@ Articles.defaultProps = {
   nextUrl: null,
   prevUrl: null
 };
+
 export default Articles;

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import draftToHtml from "draftjs-to-html";
-import htmlToDraftjs from 'html-to-draftjs';
+import htmlToDraftjs from "html-to-draftjs";
 import { EditorState, convertToRaw, ContentState } from "draft-js";
+
 import CreateArticleForm from "./CreateArticleForm/CreateArticleForm";
 
 class CreateArticle extends Component {
@@ -40,8 +41,8 @@ class CreateArticle extends Component {
         categories,
         title: article.title,
         category: article.category_id,
-        // content: article.content
-        content: EditorState.createWithContent(contentState),
+        // content: article.content,
+        content: EditorState.createWithContent(contentState)
       });
     } else {
       const categories = await this.props.getArticleCategories();
@@ -49,7 +50,7 @@ class CreateArticle extends Component {
         categories
       });
     }
-  };
+  }
 
   handleEditorState = editorState => {
     this.setState({
@@ -64,49 +65,50 @@ class CreateArticle extends Component {
       await this.props.createArticle(
         {
           title: this.state.title,
-          image: this.state.image,
-          content: draftToHtml(convertToRaw(this.state.content.getCurrentContent())),
-          category: this.state.category
-        },
-        this.props.token
-      );
-      this.props.notyService.success("Article created successfully");
-      this.props.history.push("/");
-    } catch (errors) {
-      this.props.notyService.error("Please check for errors");
-      this.setState({ errors });
-    }
-  };
-
-  handleEditorState = editorState => {
-    this.setState({
-      content: editorState
-    });
-  };
-
-  handleSubmit = async event => {
-    event.preventDefault();
-    try {
-      await this.props.createArticle(
-        {
-          title: this.state.title,
-          content: draftToHtml(convertToRaw(this.state.content.getCurrentContent())),
+          content: draftToHtml(
+            convertToRaw(this.state.content.getCurrentContent())
+          ),
           category: this.state.category,
           image: this.state.image
         },
         this.props.token
       );
-      this.props.notyService.success("Article created successfully");
+      this.props.notyService.success("Article created successfully.");
       this.props.history.push("/");
     } catch (errors) {
-      console.log(errors);
-      this.props.notyService.error("Please check for errors");
+      this.props.notyService.error(
+        "Please check for errors. Something went wrong."
+      );
+      this.setState({ errors });
+    }
+  };
+
+  updateArticle = async event => {
+    event.preventDefault();
+    try {
+      await this.props.updateArticle(
+        {
+          title: this.state.title,
+          image: this.state.image,
+          content: draftToHtml(
+            convertToRaw(this.state.content.getCurrentContent())
+          ),
+          category: this.state.category
+        },
+        this.state.article,
+        this.props.token
+      );
+      this.props.notyService.success("Article updated successfully.");
+      this.props.history.push("/");
+    } catch (errors) {
+      this.props.notyService.error(
+        "Please check for errors. Something went wrong."
+      );
       this.setState({ errors });
     }
   };
 
   handleInputChange = event => {
-    // console.log(`${event.target.name}: ${event.target.value} ${typeof (event.target.value)}`);
     this.setState({
       [event.target.name]:
         event.target.type === "file"
@@ -136,7 +138,7 @@ class CreateArticle extends Component {
 
 CreateArticle.propTypes = {
   getArticleCategories: PropTypes.func.isRequired,
-  createArticle: PropTypes.func,
+  createArticle: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
@@ -154,18 +156,18 @@ CreateArticle.propTypes = {
       category: PropTypes.shape({
         name: PropTypes.string.isRequired
       }).isRequired,
-      created_at: PropTypes.string
+      created_at: PropTypes.string.isRequired
     })
   ),
   notyService: PropTypes.shape({
     success: PropTypes.func.isRequired,
     error: PropTypes.func.isRequired
-  })
+  }).isRequired
 };
 
 CreateArticle.defaultProps = {
   updateArticle: () => {},
-  // createArticle: () => {},
   articles: []
 };
+
 export default CreateArticle;

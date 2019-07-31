@@ -1,27 +1,31 @@
 import Axios from "axios";
-import { validateAll } from "indicative";
 
 import config from "../config";
 
+const { validateAll } = window;
+
 export default class ArticlesService {
-  async getUserArticles(token, url = `${config.apiUrl}/user/articles`) {
-    const response = await Axios.get(url, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      }
-    });
-    return response.data.data;
-  }
   async getArticles(url = `${config.apiUrl}/articles`) {
     const response = await Axios.get(url);
 
     return response.data.data;
   }
+  async getUserArticles(token, url = `${config.apiUrl}/user/articles`) {
+    const response = await Axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
 
+    return response.data.data;
+  }
   async deleteArticle(id, token) {
     await Axios.delete(`${config.apiUrl}/articles/${id}`, {
-      Authorization: `Bearer ${token}`
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     });
+
     return true;
   }
   async getArticle(slug) {
@@ -32,6 +36,7 @@ export default class ArticlesService {
   async getArticleCategories() {
     // First, check if categories are set in localStorage, otherwise, request them from the server
     const categories = JSON.parse(localStorage.getItem("categories"));
+
     if (categories) {
       return categories;
     }
@@ -90,6 +95,7 @@ export default class ArticlesService {
       return Promise.reject(errors);
     }
   };
+
   updateArticle = async (data, article, token) => {
     let image;
     if (data.image) {
@@ -115,7 +121,6 @@ export default class ArticlesService {
           title: data.title,
           content: data.content,
           category_id: data.category,
-          // If a new image has been added, pass that URL otherwise, use the previous URL
           imageUrl: image ? image.secure_url : article.imageUrl
         },
         {
@@ -134,6 +139,7 @@ export default class ArticlesService {
       return Promise.reject(errors);
     }
   };
+
   async uploadToCloudinary(image) {
     const form = new FormData();
     form.append("file", image);
@@ -143,6 +149,7 @@ export default class ArticlesService {
       "https://api.cloudinary.com/v1_1/tsullivan/image/upload",
       form
     );
+
     return response.data;
   }
 }

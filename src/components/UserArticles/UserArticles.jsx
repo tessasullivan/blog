@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import PropTypes from "prop-types";
 
 import Articles from "./Articles/Articles";
@@ -28,11 +28,14 @@ class UserArticles extends Component {
 
   editArticle = article => {
     this.props.history.push(`/article/edit/${article.slug}`);
-  }
+  };
+
   deleteArticle = async id => {
-    console.log(`delete article id ${id} token ${this.props.token}`)
+    console.log(`delete article id ${id} token ${this.props.token}`);
+
     await this.props.deleteArticle(id, this.props.token);
-    // remove article from list
+
+    // remove article from list.
     const articles = this.state.articles.data.filter(
       article => article.id !== id
     );
@@ -50,17 +53,21 @@ class UserArticles extends Component {
         nextUrl={this.state.articles.next_page_url}
         prevUrl={this.state.articles.prev_page_url}
         handlePagination={this.handlePagination}
-        editArticle={this.editArticle}
         deleteArticle={this.deleteArticle}
+        editArticle={this.editArticle}
       />
     );
   }
 }
 
 UserArticles.propTypes = {
-  getArticles: PropTypes.func,
-  setArticles: PropTypes.func,
-  deleteArticle: PropTypes.func,
+  getUserArticles: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+  setArticles: PropTypes.func.isRequired,
+  deleteArticle: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }).isRequired
 };
 
 export default UserArticles;

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import renderHtml from 'react-render-html';
+import renderHtml from "react-render-html";
 
 const SingleArticle = ({ article }) => (
   <div>
@@ -35,10 +35,10 @@ const SingleArticle = ({ article }) => (
             </p>
           </div>
           <div className="col-12 align-self-end text-center">
-            {/* eslint-disable-next-line */}
-            <a
-              href="#"
+              {/* eslint-disable-next-line */}
+              <a
               className="scroll-down-1 scroll-down-inverse"
+              href="#"
               data-scrollto="section-content"
             >
               <span />
@@ -53,7 +53,9 @@ const SingleArticle = ({ article }) => (
       <div className="section" id="section-content">
         <div className="container">
           <div className="row">
-            <div className="col-12 col-lg-8 offset-lg-2">{renderHtml(article.content)}</div>
+            <div className="col-12 col-lg-8 offset-lg-2">
+              {renderHtml(article.content)}
+            </div>
           </div>
         </div>
       </div>
