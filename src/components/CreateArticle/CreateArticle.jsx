@@ -60,11 +60,9 @@ class CreateArticle extends Component {
       await this.props.createArticle(
         {
           title: this.state.title,
-          content: draftToHtml(
-            convertToRaw(this.state.content.getCurrentContent())
-          ),
-          category: this.state.category,
-          image: this.state.image
+          image: this.state.image,
+          content: draftToHtml(convertToRaw(this.state.content.getCurrentContent())),
+          category: this.state.category
         },
         this.props.token
       );
@@ -76,22 +74,25 @@ class CreateArticle extends Component {
     }
   };
 
-  updateArticle = async event => {
+  handleEditorState = editorState => {
+    this.setState({
+      content: editorState
+    });
+  };
+
+  handleSubmit = async event => {
     event.preventDefault();
     try {
-      await this.props.updateArticle(
+      await this.props.createArticle(
         {
           title: this.state.title,
-          image: this.state.image,
-          content: draftToHtml(
-            convertToRaw(this.state.content.getCurrentContent())
-          ),
-          category: this.state.category
+          content: draftToHtml(convertToRaw(this.state.content.getCurrentContent())),
+          category: this.state.category,
+          image: this.state.image
         },
-        this.state.article,
         this.props.token
       );
-      this.props.notyService.success("Article updated successfully");
+      this.props.notyService.success("Article created successfully");
       this.props.history.push("/");
     } catch (errors) {
       console.log(errors);
@@ -101,6 +102,7 @@ class CreateArticle extends Component {
   };
 
   handleInputChange = event => {
+    // console.log(`${event.target.name}: ${event.target.value} ${typeof (event.target.value)}`);
     this.setState({
       [event.target.name]:
         event.target.type === "file"

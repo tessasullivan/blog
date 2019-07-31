@@ -1,11 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Editor } from "react-draft-wysiwyg";
-// import { EditorState, convertToRaw } from "draft-js";
-
-// import draftToHtml from "draftjs-to-html";
-
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+
 import Banner from "../../Banner/Banner";
 
 const CreateArticleForm = ({
@@ -18,8 +15,9 @@ const CreateArticleForm = ({
   article,
   title,
   category,
-  content,
-  updateArticle
+  content, 
+  updateArticle,
+  handleEditorState
 }) => (
   <div>
     {/* Header */}
@@ -133,12 +131,12 @@ CreateArticleForm.propTypes = {
   ).isRequired,
   editing: PropTypes.bool.isRequired,
   article: PropTypes.shape({
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
   }),
   title: PropTypes.string.isRequired,
   content: PropTypes.objectOf(PropTypes.any).isRequired,
   category: PropTypes.string,
-  updateArticle: PropTypes.func.isRequired
+  updateArticle: PropTypes.func.isRequired,
 };
 
 CreateArticleForm.defaultProps = {
