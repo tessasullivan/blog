@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-
+import draftToHtml from "draftjs-to-html";
+import { EditorState, convertToRaw } from "draft-js";
 import CreateArticleForm from "./CreateArticleForm/CreateArticleForm";
 
 class CreateArticle extends Component {
@@ -10,7 +11,7 @@ class CreateArticle extends Component {
     this.state = {
       title: "",
       image: null,
-      content: "",
+      content: EditorState.createEmpty(),
       category: null,
       errors: [],
       categories: [],
@@ -20,8 +21,6 @@ class CreateArticle extends Component {
   }
 
   async componentWillMount() {
-    const categories = await this.props.getArticleCategories();
-
     if (this.props.match.params.slug) {
       const article = this.props.articles.find(
         articleInArray => articleInArray.slug === this.props.match.params.slug
@@ -30,6 +29,8 @@ class CreateArticle extends Component {
         this.props.history.push("/user/articles");
         return;
       }
+
+      const categories = await this.props.getArticleCategories();
       this.setState({
         editing: true,
         article,
@@ -39,11 +40,41 @@ class CreateArticle extends Component {
         content: article.content
       });
     } else {
+      const categories = await this.props.getArticleCategories();
       this.setState({
         categories
       });
     }
-  }
+  };
+
+  handleEditorState = editorState => {
+    this.setState({
+      content: editorState
+    });
+  };
+
+  handleSubmit = async event => {
+    event.preventDefault();
+
+    try {
+      await this.props.createArticle(
+        {
+          title: this.state.title,
+          content: draftToHtml(
+            convertToRaw(this.state.content.getCurrentContent())
+          ),
+          category: this.state.category,
+          image: this.state.image
+        },
+        this.props.token
+      );
+      this.props.notyService.success("Article created successfully");
+      this.props.history.push("/");
+    } catch (errors) {
+      this.props.notyService.error("Please check for errors");
+      this.setState({ errors });
+    }
+  };
 
   updateArticle = async event => {
     event.preventDefault();
@@ -52,7 +83,9 @@ class CreateArticle extends Component {
         {
           title: this.state.title,
           image: this.state.image,
-          content: this.state.content,
+          content: draftToHtml(
+            convertToRaw(this.state.content.getCurrentContent())
+          ),
           category: this.state.category
         },
         this.state.article,
@@ -62,19 +95,6 @@ class CreateArticle extends Component {
       this.props.history.push("/");
     } catch (errors) {
       console.log(errors);
-      this.props.notyService.error("Please check for errors");
-      this.setState({ errors });
-    }
-  };
-
-  handleSubmit = async event => {
-    event.preventDefault();
-
-    try {
-      await this.props.createArticle(this.state, this.props.token);
-      this.props.notyService.success("Article created successfully");
-      this.props.history.push("/");
-    } catch (errors) {
       this.props.notyService.error("Please check for errors");
       this.setState({ errors });
     }
@@ -102,6 +122,7 @@ class CreateArticle extends Component {
         content={this.state.content}
         category={this.state.category}
         updateArticle={this.updateArticle}
+        handleEditorState={this.handleEditorState}
       />
     );
   }
@@ -127,18 +148,18 @@ CreateArticle.propTypes = {
       category: PropTypes.shape({
         name: PropTypes.string.isRequired
       }).isRequired,
-      created_at: PropTypes.string,
+      created_at: PropTypes.string
     })
   ),
   notyService: PropTypes.shape({
     success: PropTypes.func.isRequired,
-    error: PropTypes.func.isRequired,
-  }),
+    error: PropTypes.func.isRequired
+  })
 };
 
 CreateArticle.defaultProps = {
   updateArticle: () => {},
-  createArticle: () => {},
+  // createArticle: () => {},
   articles: []
 };
 export default CreateArticle;

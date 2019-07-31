@@ -1,10 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import Banner from "../../Banner/Banner";
 
-const CreateArticle = ({
+const CreateArticleForm = ({
   handleInputChange,
+  handleEditorState,
   categories,
   handleSubmit,
   errors,
@@ -47,7 +49,6 @@ const CreateArticle = ({
                       type="file"
                       className="form-control"
                       onChange={handleInputChange}
-                      value={category || ''}
                       name="image"
                     />
                   </div>
@@ -78,14 +79,17 @@ const CreateArticle = ({
                   </div>
                 </div>
                 <div className="form-group"> 
-                  <textarea
+                <Editor
+                    editorState={content}
+                    onEditorStateChange={handleEditorState} />
+                  {/* <textarea
                     className="form-control form-control-lg"
                     rows={4}
                     placeholder="Content"
                     name="content"
                     value={content}
                     onChange={handleInputChange}
-                  />
+                  /> */}
                 </div>
                 <div className="text-center">
                   <button className="btn btn-lg btn-primary" type="submit">
@@ -102,7 +106,7 @@ const CreateArticle = ({
   </div>
 );
 
-CreateArticle.propTypes = {
+CreateArticleForm.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
   categories: PropTypes.arrayOf(
     PropTypes.shape({
@@ -117,12 +121,19 @@ CreateArticle.propTypes = {
     })
   ).isRequired,
   editing: PropTypes.bool.isRequired,
+  article: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+  }),
+  title: PropTypes.string.isRequired,
+  content: PropTypes.objectOf(PropTypes.any).isRequired,
+  category: PropTypes.string,
   updateArticle: PropTypes.func.isRequired,
+  
 };
 
-CreateArticle.defaultProps = {
+CreateArticleForm.defaultProps = {
   article: null,
   category: null,
 }
 
-export default CreateArticle;
+export default CreateArticleForm;
